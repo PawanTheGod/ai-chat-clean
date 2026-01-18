@@ -129,7 +129,7 @@ export default function ChatInterface() {
       <SpaceBackground />
       
       {/* Header */}
-      <header className="border-b border-slate-700/30 premium-glass relative z-10 shadow-lg shadow-black/20">
+      <header className="border-b border-white/10 bg-[#2f2f2f] relative z-10">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className={`w-10 h-10 rounded-xl ${currentConfig.accent} flex items-center justify-center shadow-md subtle-border-glow`}>
@@ -146,17 +146,17 @@ export default function ChatInterface() {
             <div className="relative">
               <button
                 onClick={() => setShowModelMenu(!showModelMenu)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/40 border border-slate-600/30 hover:border-slate-500/50 hover:bg-slate-800/60 transition-all backdrop-blur-sm shadow"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#40414f] border border-white/10 hover:bg-[#4a4b59] transition-all"
               >
                 <Cpu className="w-3.5 h-3.5 text-slate-400" />
-                <span className="text-xs text-slate-300 font-medium">{currentModel.name.split('(')[0].trim()}</span>
+                <span className="text-xs text-gray-300 font-medium">{currentModel.name.split('(')[0].trim()}</span>
               </button>
 
               {/* Model Dropdown */}
               {showModelMenu && (
-                <div className="absolute top-full right-0 mt-2 w-72 premium-glass border border-slate-600/20 rounded-xl shadow-2xl shadow-black/40 overflow-hidden z-50">
-                  <div className="p-3 border-b border-slate-600/10">
-                    <p className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Select Model</p>
+                <div className="absolute top-full right-0 mt-2 w-72 bg-[#2f2f2f] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="p-3 border-b border-white/10">
+                    <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">Select Model</p>
                   </div>
                   <div className="max-h-96 overflow-y-auto custom-scrollbar">
                     {Object.entries(recommendedModels).map(([key, model]) => (
@@ -173,8 +173,8 @@ export default function ChatInterface() {
                           setSelectedModel(modelKeyMap[key]);
                           setShowModelMenu(false);
                         }}
-                        className={`w-full px-4 py-3 text-left hover:bg-slate-700/20 transition-all border-b border-slate-600/10 last:border-0 ${
-                          currentModel.id === model.id ? 'bg-slate-700/30 border-l-2 border-l-slate-400' : ''
+                        className={`w-full px-4 py-3 text-left hover:bg-[#40414f] transition-all border-b border-white/5 last:border-0 ${
+                          currentModel.id === model.id ? 'bg-[#40414f]' : ''
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
@@ -182,16 +182,16 @@ export default function ChatInterface() {
                             <div className="flex items-center gap-2">
                               <span className="text-sm font-medium text-white">{model.name}</span>
                               {currentModel.id === model.id && (
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-600/40 text-slate-300 font-medium">Active</span>
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#40414f] text-gray-300 font-medium">Active</span>
                               )}
                             </div>
-                            <p className="text-[11px] text-slate-400/80 mt-0.5">{model.description}</p>
+                            <p className="text-[11px] text-gray-400 mt-0.5">{model.description}</p>
                             <div className="flex items-center gap-2 mt-1.5">
                               <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">
                                 {model.performance.speed}
                               </span>
-                              <span className="text-[10px] text-slate-500">•</span>
-                              <span className="text-[10px] text-slate-500">{model.contextLength.toLocaleString()} ctx</span>
+                              <span className="text-[10px] text-gray-500">•</span>
+                              <span className="text-[10px] text-gray-500">{model.contextLength.toLocaleString()} ctx</span>
                             </div>
                           </div>
                         </div>
@@ -232,25 +232,25 @@ export default function ChatInterface() {
               className={`flex gap-4 items-start ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.sender === 'bot' && (
-                <div className="w-9 h-9 flex-shrink-0 ring-1 ring-slate-700/40 shadow-lg mt-1 rounded-xl overflow-hidden">
-                  <div className={`w-full h-full ${currentConfig.accent} flex items-center justify-center`}>
+                <div className="w-9 h-9 flex-shrink-0 mt-1 rounded-lg overflow-hidden bg-[#40414f]">
+                  <div className={`w-full h-full flex items-center justify-center`}>
                     <Bot className="w-4 h-4 text-white" />
                   </div>
                 </div>
               )}
 
               <div
-                className={`max-w-[70%] rounded-xl px-5 py-3.5 shadow-lg ${
+                className={`max-w-[70%] rounded-xl px-5 py-3.5 ${
                   message.sender === 'user'
-                    ? 'bg-slate-700/60 text-white backdrop-blur-md border border-slate-600/30'
-                    : 'premium-glass border border-slate-600/20 text-slate-100'
+                    ? 'bg-[#343541] text-white border border-white/10'
+                    : 'text-gray-100'
                 }`}
               >
                 <p className="text-sm leading-relaxed">{message.content}</p>
               </div>
 
               {message.sender === 'user' && (
-                <div className="w-9 h-9 flex-shrink-0 ring-1 ring-slate-700/40 shadow-lg mt-1 rounded-xl bg-slate-700 flex items-center justify-center">
+                <div className="w-9 h-9 flex-shrink-0 mt-1 rounded-lg bg-[#5a5a6e] flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
                 </div>
               )}
@@ -259,16 +259,16 @@ export default function ChatInterface() {
 
           {isStreaming && (
             <div className="flex gap-4 items-start">
-              <div className="w-9 h-9 ring-1 ring-slate-700/40 mt-1 rounded-xl overflow-hidden">
-                <div className={`w-full h-full ${currentConfig.accent} flex items-center justify-center`}>
+              <div className="w-9 h-9 mt-1 rounded-lg overflow-hidden bg-[#40414f]">
+                <div className={`w-full h-full flex items-center justify-center`}>
                   <Bot className="w-4 h-4 text-white" />
                 </div>
               </div>
-              <div className="premium-glass border border-slate-600/20 rounded-xl px-5 py-4 shadow-lg">
+              <div className="bg-[#2f2f2f] border border-white/10 rounded-xl px-5 py-4">
                 <div className="flex gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -280,14 +280,14 @@ export default function ChatInterface() {
       {/* Input */}
       <div className="p-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="premium-glass border border-slate-600/25 rounded-2xl shadow-xl p-2.5 flex items-end gap-2.5 focus-within:border-slate-500/40 transition-all">
+          <div className="bg-[#40414f] border border-white/10 rounded-2xl p-2.5 flex items-end gap-2.5">
             <textarea
               ref={textareaRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={`Message ${currentConfig.label}...`}
-              className="flex-1 bg-transparent border-none resize-none text-white placeholder-slate-500 focus:outline-none px-3 py-3.5 min-h-[46px] max-h-[200px] text-sm"
+              className="flex-1 bg-transparent border-none resize-none text-white placeholder-gray-500 focus:outline-none px-3 py-3.5 min-h-[46px] max-h-[200px] text-sm"
               rows={1}
             />
             <button
@@ -295,8 +295,8 @@ export default function ChatInterface() {
               disabled={!input.trim() || isStreaming}
               className={`p-3 rounded-xl transition-all ${
                 input.trim() && !isStreaming
-                  ? 'bg-slate-700 text-white hover:bg-slate-600 shadow-md'
-                  : 'bg-slate-800/30 text-slate-600 cursor-not-allowed'
+                  ? 'bg-white text-black hover:bg-gray-200'
+                  : 'bg-[#343541] text-gray-600 cursor-not-allowed'
               }`}
             >
               <Send className="h-5 w-5" />
