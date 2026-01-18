@@ -163,7 +163,14 @@ export default function ChatInterface() {
                       <button
                         key={model.id}
                         onClick={() => {
-                          setSelectedModel(key.replace('best', '').toLowerCase());
+                          // Map the recommendedModels keys to actual AVAILABLE_MODELS keys
+                          const modelKeyMap: Record<string, string> = {
+                            'bestRoleplay': 'deepseek-r1t-chimera',
+                            'bestAcademia': 'mimo-v2-flash',
+                            'bestReasoning': 'deepseek-r1-0528',
+                            'bestCoding': 'qwen3-coder',
+                          };
+                          setSelectedModel(modelKeyMap[key]);
                           setShowModelMenu(false);
                         }}
                         className={`w-full px-5 py-4 text-left hover:bg-indigo-500/10 transition-all border-b border-indigo-400/5 last:border-0 ${
