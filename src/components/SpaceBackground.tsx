@@ -33,7 +33,7 @@ function Stars(props: any) {
 
 export default function SpaceBackground() {
   return (
-    <div className="fixed inset-0 z-0 bg-[#212121]" style={{ pointerEvents: 'none' }}>
+    <div className="fixed inset-0 z-0 bg-black" style={{ pointerEvents: 'none' }}>
       <Canvas camera={{ position: [0, 0, 1], fov: 75 }}>
         <ambientLight intensity={0.1} />
         <Stars />
