@@ -141,72 +141,11 @@ export default function ChatInterface() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Model Switcher */}
-            <div className="relative">
+          {/* Personality Switcher */}
+          <div className="flex -space-x-2">
+            {(Object.keys(personalityConfig) as Personality[]).slice(0, 6).map((key) => (
               <button
-                onClick={() => setShowModelMenu(!showModelMenu)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1a1a1a] border border-white/10 hover:bg-[#252525] transition-all"
-              >
-                <Cpu className="w-3.5 h-3.5 text-slate-400" />
-                <span className="text-xs text-gray-300 font-medium">{currentModel.name.split('(')[0].trim()}</span>
-              </button>
-
-              {/* Model Dropdown */}
-              {showModelMenu && (
-                <div className="absolute top-full right-0 mt-2 w-72 bg-black border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
-                  <div className="p-3 border-b border-white/10">
-                    <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">Select Model</p>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto custom-scrollbar">
-                    {Object.entries(recommendedModels).map(([key, model]) => (
-                      <button
-                        key={model.id}
-                        onClick={() => {
-                          // Map the recommendedModels keys to actual AVAILABLE_MODELS keys
-                          const modelKeyMap: Record<string, string> = {
-                            'bestRoleplay': 'deepseek-r1t-chimera',
-                            'bestAcademia': 'mimo-v2-flash',
-                            'bestReasoning': 'deepseek-r1-0528',
-                            'bestCoding': 'qwen3-coder',
-                          };
-                          setSelectedModel(modelKeyMap[key]);
-                          setShowModelMenu(false);
-                        }}
-                        className={`w-full px-4 py-3 text-left hover:bg-[#1a1a1a] transition-all border-b border-white/5 last:border-0 ${
-                          currentModel.id === model.id ? 'bg-[#1a1a1a]' : ''
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-white">{model.name}</span>
-                              {currentModel.id === model.id && (
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1a1a1a] text-gray-300 font-medium">Active</span>
-                              )}
-                            </div>
-                            <p className="text-[11px] text-gray-400 mt-0.5">{model.description}</p>
-                            <div className="flex items-center gap-2 mt-1.5">
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">
-                                {model.performance.speed}
-                              </span>
-                              <span className="text-[10px] text-gray-500">•</span>
-                              <span className="text-[10px] text-gray-500">{model.contextLength.toLocaleString()} ctx</span>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Personality Switcher */}
-            <div className="flex -space-x-2">
-              {(Object.keys(personalityConfig) as Personality[]).slice(0, 6).map((key) => (
-                <button
-                  key={key}
+                key={key}
                 onClick={() => setPersonality(key)}
                 className={`w-8 h-8 rounded-full ring-2 ring-slate-900 transition-all hover:scale-105 ${
                   personality === key ? 'opacity-100 scale-105 z-10 ring-slate-700' : 'opacity-40 hover:opacity-70'
@@ -218,7 +157,6 @@ export default function ChatInterface() {
                 </div>
               </button>
             ))}
-            </div>
           </div>
         </div>
       </header>
@@ -290,6 +228,70 @@ export default function ChatInterface() {
               className="flex-1 bg-transparent border-none resize-none text-white placeholder-gray-500 focus:outline-none px-3 py-3.5 min-h-[46px] max-h-[200px] text-sm"
               rows={1}
             />
+            
+            {/* Model Selector - Subtle & Compact */}
+            <div className="relative">
+              <button
+                onClick={() => setShowModelMenu(!showModelMenu)}
+                className="flex items-center gap-1.5 px-2 py-2 rounded-lg hover:bg-[#252525] transition-all group"
+                title="Select Model"
+              >
+                <Cpu className="w-4 h-4 text-gray-500 group-hover:text-gray-400" />
+                <span className="text-[11px] text-gray-500 group-hover:text-gray-400 max-w-[80px] truncate">
+                  {currentModel.name.split('(')[0].trim()}
+                </span>
+              </button>
+
+              {/* Model Dropdown */}
+              {showModelMenu && (
+                <div className="absolute bottom-full right-0 mb-2 w-72 bg-black border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="p-3 border-b border-white/10">
+                    <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">Select Model</p>
+                  </div>
+                  <div className="max-h-96 overflow-y-auto custom-scrollbar">
+                    {Object.entries(recommendedModels).map(([key, model]) => (
+                      <button
+                        key={model.id}
+                        onClick={() => {
+                          // Map the recommendedModels keys to actual AVAILABLE_MODELS keys
+                          const modelKeyMap: Record<string, string> = {
+                            'bestRoleplay': 'deepseek-r1t-chimera',
+                            'bestAcademia': 'mimo-v2-flash',
+                            'bestReasoning': 'deepseek-r1-0528',
+                            'bestCoding': 'qwen3-coder',
+                          };
+                          setSelectedModel(modelKeyMap[key]);
+                          setShowModelMenu(false);
+                        }}
+                        className={`w-full px-4 py-3 text-left hover:bg-[#1a1a1a] transition-all border-b border-white/5 last:border-0 ${
+                          currentModel.id === model.id ? 'bg-[#1a1a1a]' : ''
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-medium text-white">{model.name}</span>
+                              {currentModel.id === model.id && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1a1a1a] text-gray-300 font-medium">Active</span>
+                              )}
+                            </div>
+                            <p className="text-[11px] text-gray-400 mt-0.5">{model.description}</p>
+                            <div className="flex items-center gap-2 mt-1.5">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">
+                                {model.performance.speed}
+                              </span>
+                              <span className="text-[10px] text-gray-500">•</span>
+                              <span className="text-[10px] text-gray-500">{model.contextLength.toLocaleString()} ctx</span>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={handleSendMessage}
               disabled={!input.trim() || isStreaming}
